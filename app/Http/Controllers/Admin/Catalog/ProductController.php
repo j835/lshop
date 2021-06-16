@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Intervention\Image\Facades\Image;
 
 class ProductController extends Controller
 {
@@ -112,14 +113,24 @@ class ProductController extends Controller
 
     public function addImages($id,Request $request) 
     {
-        $product = $this->productService->getWithDeletedById($id);
+        $images = $request->except('_token');
 
+        DB::beginTransaction();
+
+        foreach($images as $key => $image) {
+            $request->validate([$key => 'image|max:10000']);
+            $this->productService->addImage($id,$image);
+        }
+
+        DB::commit();
         
+        return back()->with('success', 'Изображения успешно добавлены');
     }
 
-    public function deleteImage($id, Request $request) 
+    public function deleteImage(Request $request) 
     {
-        dd('Удаление изображения');
+        $this->productService->deleteImage($request->img_id);
+        return back()->with('success', 'Изображение успешно удалено');
     }
 
 

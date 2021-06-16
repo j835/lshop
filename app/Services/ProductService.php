@@ -3,6 +3,9 @@
 namespace App\Services;
 
 use App\Models\Product;
+use App\Models\ProductImage;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class ProductService
 {
@@ -65,7 +68,33 @@ class ProductService
 
     public function addImage($id, $image) 
     {
+        $photo = Image::make($image)->encode('jpg', 100);
+
+        $name = time() . '_' . md5($photo->__toString()) . '.jpg';
+
+        $preview = Image::make($image)
+        ->resize(null, 300, function ($constraint) { $constraint->aspectRatio(); } )
+        ->encode('jpg',100);
+
+        Storage::put(config('storage.product_img') . $name, $photo->__toString());
+        Storage::put(config('storage.product_img_prevew') . $name, $preview->__toString());
+
+        
+        $image = new ProductImage([
+            'path' => $name,
+            'product_id' => $id,
+            'is_main' => 0,
+        ]);
+
+        $image->save();
 
     }
 
+    public function deleteImage($img_id) 
+    {
+        $img = ProductImage::find($img_id);
+        $path = $img->path;
+        Storage::delete([config('storage.product_img') . $path, config('storage.product_img_prevew') . $path]);
+        $img->delete();
+    }
 }

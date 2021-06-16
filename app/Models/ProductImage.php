@@ -13,7 +13,6 @@ class ProductImage extends Model
         'id',
         'product_id',
         'path',
-        'preview_path',
         'is_main'
     ];
 

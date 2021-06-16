@@ -100,7 +100,7 @@
         </div>
         <div class="row" id="product-images">
             <h4>Добавить изображения</h4>
-            <form action="{{'/' . request()->path() . '/image/add'}}" class="add-image-form" method="POST" type="multipart/form-data">
+            <form action="{{'/' . request()->path() . '/image/add'}}" class="add-image-form" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group image-inputs">
                     <input class="form-control" type="file" name="image_0">
@@ -114,8 +114,9 @@
                 @foreach ($product->images->sortByDesc('is_main') as $image)
                     <div class="card border-primary mb-3 col-5">
                         <div class="card-header">
-                            <form action="{{'/' . request()->path() . '/image/delete'}}" class="delete-image-form">
+                            <form method="POST" action="{{'/' . request()->path() . '/image/delete'}}" class="delete-image-form">
                                 @csrf
+                                @method('DELETE')
                                 <input type="hidden" name="img_id" value="{{ $image->id }}">
                                 <button type="submit" class="btn btn-danger">Удалить</button>
                             </form>

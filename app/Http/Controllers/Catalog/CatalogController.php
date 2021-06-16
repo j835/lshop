@@ -87,20 +87,20 @@ class CatalogController extends Controller
     public function test() 
     {
    
-        $images = ProductImage::all();
-        foreach($images as $image) {
-            $newName = time() . '_' . $image->path;
+        // $images = ProductImage::all();
+        // foreach($images as $image) {
+        //     $newName = time() . '_' . $image->path;
             
-            Storage::putFileAs('public/product',
-             new File($_SERVER['DOCUMENT_ROOT'] . '/upload/catalog/product/' . $image->path),
-             $newName);
+        //     Storage::putFileAs('public/product',
+        //      new File($_SERVER['DOCUMENT_ROOT'] . '/upload/catalog/product/' . $image->path),
+        //      $newName);
             
-            Storage::putFileAs('/public/product_preview',
-             new File($_SERVER['DOCUMENT_ROOT']  . '/upload/catalog/product_preview/' . $image->preview_path),
-             $newName);
+        //     Storage::putFileAs('/public/product_preview',
+        //      new File($_SERVER['DOCUMENT_ROOT']  . '/upload/catalog/product_preview/' . $image->preview_path),
+        //      $newName);
             
-             $image->update(['path' => $newName]);
+        //      $image->update(['path' => $newName]);
         
-        }
+        // }
     }
 }
