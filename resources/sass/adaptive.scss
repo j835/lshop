@@ -1,0 +1,26 @@
+@media(max-width: 768px) {
+  .header-top {
+    display: none;
+  }
+
+  .header {
+    .mobile-icon {
+      display: block;
+    }
+
+    .burger-wrapper {
+      display: block;
+    }
+
+    .logo {
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+    }
+  }
+  .search-form {
+    .search-input {
+      display: none;
+    }
+  }
+}
