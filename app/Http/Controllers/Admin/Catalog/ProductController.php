@@ -7,7 +7,6 @@ use App\Models\Product;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Intervention\Image\Facades\Image;
 
 class ProductController extends Controller
 {
@@ -21,19 +20,28 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-        if ($request->q) {
+        if ($request->q) 
+        {
             return view('admin.product.search', [
                 'products' => $this->productService->searchWithDeleted($request->q),
             ]);
-
-        } else if ($request->category_id) {
+        }  
+        
+        if ($request->category_id) 
+        {
             return view('admin.product.category_products', [
                 'products' => Product::withTrashed()->where('category_id', $request->category_id)->get(),
             ]);
-
-        } else {
-            return view('admin.product.index');
         }
+         
+        return view('admin.product.index');
+
+    
+    }
+
+    public function createPage()
+    {
+        return view('admin.product.create');
     }
 
     public function editPage($id)
@@ -44,17 +52,58 @@ class ProductController extends Controller
         ]);
     }
 
+    public function create(Request $request)
+    {
+        $request->validate([
+            'name' => 'max:255',
+            'code' => 'required|code|max:255|unique:catalog_products',
+            'sort' => 'integer|min:1',
+            'category_id' => 'integer|min:1',
+            'price' => 'price',
+            'discount' => 'nullable|integer|between:1,100',
+            'new_price' => 'nullable|price',
+            'seo_description' => 'nullable|max:255',
+            'seo_keywords' => 'nullable|max:255',
+        ]);
+
+        DB::beginTransaction();
+
+        $product = Product::create($request->only([
+            'name', 'code', 'sort', 'description', 'category_id', 'price', 'discount', 'new_price', 'seo_description', 'seo_keywords',
+        ]));
+
+        for ($i = 0; true; $i++) {
+            $input = 'image_' . $i;
+            if ($request->$input) 
+            {
+                $request->validate([
+                    $input => 'nullable|image',
+                ]);
+
+                $this->productService->addImage($product->id, $request->$input);
+            } else {
+                break;
+
+            }
+        }
+
+        DB::commit();
+
+        return redirect('/admin/product/' . $product->id)->with('success', 'Товар успешно создан');
+
+    }
+
     public function edit($id, Request $request)
     {
 
         $product = $this->productService->getWithDeletedById($id);
 
         $request->validate([
-            'name' => 'max:255|required|',
-            'code' => 'required|code|max:255|unique:catalog_products,code,' . $product->id . ',id',
-            'sort' => 'integer|required|min:1',
+            'name' => 'max:255',
+            'code' => 'code|max:255|unique:catalog_products,code,' . $product->id . ',id',
+            'sort' => 'integer|min:1',
             'category_id' => 'integer|min:1',
-            'price' => 'required|price',
+            'price' => 'price',
             'discount' => 'nullable|integer|between:1,100',
             'new_price' => 'nullable|price',
             'seo_description' => 'nullable|max:255',
@@ -64,12 +113,12 @@ class ProductController extends Controller
         DB::beginTransaction();
 
         $product->update($request->only([
-            'name', 'code', 'sort','description', 'category_id', 'price', 'discount', 'new_price', 'seo_description', 'seo_keywords'
-            ]));
+            'name', 'code', 'sort', 'description', 'category_id', 'price', 'discount', 'new_price', 'seo_description', 'seo_keywords',
+        ]));
 
         DB::commit();
 
-        return back()->with('success' , 'Информация о товаре успешно обновлена');
+        return back()->with('success', 'Информация о товаре успешно обновлена');
     }
 
     public function softDelete($id, Request $request)
@@ -90,12 +139,11 @@ class ProductController extends Controller
 
     public function delete($id, Request $request)
     {
-        echo "Удаление товара $id" ;
+        // Todo
+        echo "Удаление товара $id";
     }
 
-    
-
-    public function changeMainImage($id, Request $request) 
+    public function changeMainImage($id, Request $request)
     {
         $img_id = $request->img_id;
         $product = $this->productService->getWithDeletedById($id);
@@ -111,28 +159,26 @@ class ProductController extends Controller
 
     }
 
-    public function addImages($id,Request $request) 
+    public function addImages($id, Request $request)
     {
         $images = $request->except('_token');
 
         DB::beginTransaction();
 
-        foreach($images as $key => $image) {
+        foreach ($images as $key => $image) {
             $request->validate([$key => 'image|max:10000']);
-            $this->productService->addImage($id,$image);
+            $this->productService->addImage($id, $image);
         }
 
         DB::commit();
-        
+
         return back()->with('success', 'Изображения успешно добавлены');
     }
 
-    public function deleteImage(Request $request) 
+    public function deleteImage(Request $request)
     {
         $this->productService->deleteImage($request->img_id);
         return back()->with('success', 'Изображение успешно удалено');
     }
-
-
 
 }

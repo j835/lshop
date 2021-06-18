@@ -63,8 +63,18 @@ body .back-button {
   padding: 20px 0 0 0;
   height: 100%;
 }
+#sidebar .nav-header {
+  font-size: 18px;
+  padding: 5px 10px;
+}
+#sidebar .nav-group {
+  margin-left: 15px;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+#sidebar .nav-link {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
 #sidebar .nav-item {
-  border-bottom: 1px solid #ddd;
   padding: 0 10px;
   transition: border-bottom-color 200ms;
 }
@@ -123,13 +133,64 @@ body .back-button {
   margin-bottom: 5px;
 }
 
-#product-edit {
+#product-edit, #product-create {
   border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
-#product-edit .form-label {
+#product-edit .form-label, #product-create .form-label {
   color: #212529;
   font-weight: bold;
   font-size: 15px;
+}
+#product-edit .category-id-group, #product-create .category-id-group {
+  display: flex;
+  height: 40px;
+}
+
+#product-create {
+  border-right: none;
+}
+
+#tab-nav-wrapper {
+  padding-left: 0;
+  padding-right: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  margin-bottom: 30px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: inset 0 0 1px 0px black;
+  flex-grow: 1;
+  margin-right: 20px;
+}
+#tab-nav-wrapper .tab-nav {
+  flex-grow: 1;
+  padding: 15px 20px;
+  text-align: center;
+  color: black;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: 200ms all;
+}
+#tab-nav-wrapper .tab-nav.active {
+  color: white;
+  background-color: #253544;
+  cursor: auto;
+}
+#tab-nav-wrapper .tab-nav:hover {
+  color: white;
+  background-color: #253544;
+}
+
+#tabs > div {
+  display: none;
+  padding: 0;
+}
+
+#tabs > div.active {
+  padding: 0;
+  display: flex;
 }
 
 #product-actions {
@@ -162,6 +223,7 @@ body .back-button {
 }
 #product-images .card {
   padding: 0px;
+  margin-right: 20px;
 }
 #product-images .card .card-header {
   padding: 0px;
@@ -178,6 +240,31 @@ body .back-button {
   max-width: 100%;
 }
 
+#product-create .add-image-form {
+  margin-bottom: 10px;
+}
+#product-create .add-image-form input {
+  margin-bottom: 10px;
+}
+#product-create .add-image-form #moreImg {
+  margin-bottom: 10px;
+  color: #727272;
+}
+#product-create .add-image-form .btn.btn-primary {
+  margin-bottom: 15px;
+}
+
 #footer {
   height: 100px;
+}
+
+.jquery-modal.blocker {
+  z-index: 2000;
+}
+.jquery-modal.blocker .modal {
+  z-index: 3000;
+}
+.jquery-modal.blocker .close-modal {
+  z-index: 4000;
+  display: none !important;
 }

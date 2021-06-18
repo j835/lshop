@@ -86,6 +86,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'as' => 'admin.'], fu
    
    Route::group(['prefix' => 'product', 'as' => 'product.'], function() {
 
+        Route::get('/create/', [ProductController::class, 'createPage'])->name('create');
+        Route::post('/create/', [ProductController::class, 'create']);
+
         Route::get('/', [ProductController::class, 'index'])->name('index');
         Route::get('/{id}/', [ProductController::class, 'editPage'])->name('editPage');
 

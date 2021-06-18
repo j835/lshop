@@ -79,11 +79,12 @@ class ProductService
         Storage::put(config('storage.product_img') . $name, $photo->__toString());
         Storage::put(config('storage.product_img_prevew') . $name, $preview->__toString());
 
-        
+        $is_main = ProductImage::where('product_id', '=', $id)->count() ? 0 : 1;
+
         $image = new ProductImage([
             'path' => $name,
             'product_id' => $id,
-            'is_main' => 0,
+            'is_main' => $is_main,
         ]);
 
         $image->save();
@@ -95,6 +96,14 @@ class ProductService
         $img = ProductImage::find($img_id);
         $path = $img->path;
         Storage::delete([config('storage.product_img') . $path, config('storage.product_img_prevew') . $path]);
+        if($img->is_main) {
+            if($new_main = ProductImage::where('product_id', '=', $img->product_id)->where('is_main', '=', 0)->first()) {
+                $new_main->is_main = 1;
+                $new_main->update();
+            }
+        }
         $img->delete();
     }
+
+    
 }
