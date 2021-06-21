@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Catalog;
+namespace App\Http\Controllers\Admin\Product;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
@@ -77,7 +77,7 @@ class ProductController extends Controller
             if ($request->$input) 
             {
                 $request->validate([
-                    $input => 'nullable|image',
+                    $input => 'nullable|image|max:10000',
                 ]);
 
                 $this->productService->addImage($product->id, $request->$input);
@@ -139,8 +139,20 @@ class ProductController extends Controller
 
     public function delete($id, Request $request)
     {
-        // Todo
-        echo "Удаление товара $id";
+        $product = $this->productService->getWithDeletedById($id);
+        
+        DB::beginTransaction();
+
+        foreach($product->images as $image) {
+            $this->productService->deleteImage($image->id);
+        }
+        
+        $product->forceDelete();
+
+        DB::commit();
+
+        return redirect(route('admin.product.index'))->with('success' , 'Товар ' . $product->name . 'успещно удален');
+
     }
 
     public function changeMainImage($id, Request $request)

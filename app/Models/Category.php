@@ -29,7 +29,7 @@ class Category extends Model
     public function products()
     {
         return $this->hasMany(Product::class)->with(['category','main_image'])
-            ->where('is_active', '=', true);
+            ->where('is_active', '=', true)->orderBy('sort', 'asc');
     }
 
 

@@ -41,7 +41,7 @@ class CartService
             $cart[] = (object)[
                 'id' => $item->id,
                 'name' => $item->name,
-                'preview_path' => $item->getMainImagePreview(),
+                'preview_path' => $item->getMainImagePreviewPath(),
                 'price' => $item->getActualPrice(),
                 'quantity' => $session[$item->id],
                 'total' => $item->getActualPrice() * $session[$item->id],
