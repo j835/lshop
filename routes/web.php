@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\Admin\Catalog\ProductController;
 use App\Http\Controllers\Admin\MainPageController;
+use App\Http\Controllers\Admin\Product\ProductCreateController;
+use App\Http\Controllers\Admin\Product\ProductEditController;
+use App\Http\Controllers\Admin\Product\ProductImageController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Catalog\CartController;
@@ -86,21 +88,25 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'as' => 'admin.'], fu
    
    Route::group(['prefix' => 'product', 'as' => 'product.'], function() {
 
-        Route::get('/create/', [ProductController::class, 'createPage'])->name('create');
-        Route::post('/create/', [ProductController::class, 'create']);
+        Route::get('/', [ProductEditController::class, 'index'])->name('index');
 
-        Route::get('/', [ProductController::class, 'index'])->name('index');
-        Route::get('/{id}/', [ProductController::class, 'editPage'])->name('editPage');
+        Route::get('/edit/{id}', [ProductEditController::class, 'editPage']);
+        Route::post('/edit', [ProductEditController::class, 'edit'])->name('edit');
 
-        Route::post('/{id}/edit', [ProductController::class, 'edit']);
-        Route::post('/{id}/softdelete', [ProductController::class, 'softDelete']);
-        Route::post('/{id}/unsoftdelete', [ProductController::class, 'unSoftDelete']);
-        Route::delete('/{id}/delete', [ProductController::class, 'delete']);
+        Route::post('/softdelete', [ProductEditController::class, 'softDelete'])->name('softDelete');
+        Route::post('/unsoftdelete', [ProductEditController::class, 'unSoftDelete'])->name('unSoftDelete');
 
-        Route::post('{id}/image/add', [ProductController::class, 'addImages']);
-        Route::post('/{id}/image/changemain', [ProductController::class, 'changeMainImage']);
-        Route::delete('/{id}/image/delete',[ProductController::class, 'deleteImage']);
+        Route::delete('/delete', [ProductEditController::class, 'delete'])->name('delete');
 
+        Route::get('/create/', [ProductCreateController::class, 'index'])->name('create');
+        Route::post('/create/', [ProductCreateController::class, 'create']);
+
+        Route::group(['prefix' => 'image', 'as' => 'image.'], function() {
+            
+            Route::post('/add', [ProductImageController::class, 'add'])->name('add');
+            Route::post('/changemain', [ProductImageController::class, 'changeMain'])->name('changeMain');
+            Route::delete('/delete',[ProductImageController::class, 'delete'])->name('delete');
+        });
 
    });
 

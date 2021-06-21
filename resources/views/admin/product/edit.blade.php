@@ -41,14 +41,13 @@
 
         <div id="tabs" class="row">
             <div class="row active" id="main-info">
-                <form action="{{ '/' . request()->path() . '/edit' }}" method="POST" id="product-edit" class="col-7">
+                <form action="{{ route('admin.product.edit') }}" method="POST" id="product-edit" class="col-7">
                     @csrf
                     @method('POST')
                     <legend>Редактирование товара</legend>
 
                     <label class="form-label no-margin">ID</label>
-                    <input type="text" readonly="" class="form-control-plaintext no-padding" value="{{ $product->id }}">
-
+                    <input type="text" name="id" readonly="" class="form-control-plaintext no-padding" value="{{ $product->id }}">
 
                     <label class="form-label no-margin">Активность</label>
                     <input type="text" readonly="" class="form-control-plaintext no-padding mb-2"
@@ -106,22 +105,25 @@
                     <div class="row" id="product-actions">
                         <h4>Действия</h4>
                         @if ($product->trashed())
-                            <form action="{{ '/' . request()->path() . '/unsoftdelete' }}" method="POST">
+                            <form action="{{ route('admin.product.unSoftDelete') }}" method="POST">
                                 @csrf
                                 @method('POST')
+                                <input type="hidden" name="id" value="{{ $product->id }}">
                                 <button type="submit" class="btn btn-large btn-primary">Активировать товар</button>
                             </form>
                         @else
-                            <form action="{{ '/' . request()->path() . '/softdelete' }}" method="POST">
+                            <form action="{{ route('admin.product.softDelete') }}" method="POST">
                                 @csrf
                                 @method('POST')
+                                <input type="hidden" name="id" value="{{ $product->id }}">
                                 <button type="submit" class="btn btn-large btn-primary">Деактивировать товар</button>
                             </form>
                         @endif
 
-                        <form action="{{ '/' . request()->path() . '/delete' }}" id="productDeleteForm" method="POST">
+                        <form action="{{ route('admin.product.delete') }}" id="productDeleteForm" method="POST">
                             @csrf
                             @method('DELETE')
+                            <input type="hidden" name="id" value="{{ $product->id }}">
                             <button type="submit" class="btn btn-large btn-danger">Удалить товар</button>
                         </form>
                     </div>
@@ -129,9 +131,11 @@
             </div>
             <div class="row" id="product-images">
                 <h4>Добавить изображения</h4>
-                <form action="{{ '/' . request()->path() . '/image/add' }}" class="add-image-form" method="POST"
+                <form action="{{ route('admin.product.image.add') }}" class="add-image-form" method="POST"
                     enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+
                     <div class="form-group image-inputs">
                         <input class="form-control" type="file" name="image_0">
                     </div>
@@ -145,17 +149,18 @@
                     @foreach ($product->images->sortByDesc('is_main') as $image)
                         <div class="card border-primary mb-3 col-2">
                             <div class="card-header">
-                                <form method="POST" action="{{ '/' . request()->path() . '/image/delete' }}"
+                                <form method="POST" action="{{ route('admin.product.image.delete') }}"
                                     class="delete-image-form">
                                     @csrf
                                     @method('DELETE')
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
                                     <input type="hidden" name="img_id" value="{{ $image->id }}">
                                     <button type="submit" class="btn btn-danger">Удалить</button>
                                 </form>
                                 @if (!$image->is_main)
-
-                                    <form action="{{ '/' . request()->path() . '/image/changemain' }}" method="POST">
+                                    <form action="{{ route('admin.product.image.changeMain') }}" method="POST">
                                         @csrf
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
                                         <input type="hidden" name="img_id" value="{{ $image->id }}">
                                         <button type="submit" class="btn btn-primary">Сделать главным</button>
                                     </form>

@@ -25,7 +25,7 @@
         @foreach ($products as $product)
                 <tr>
                     <th scope="row"> {{ $product->id }}</th>
-                    <td><a class="link-primary" href="{{ route('admin.product.index') . '/' . $product->id }}">{{ $product->name }}</a></td>
+                    <td><a class="link-primary" href="{{ route('admin.product.index') . '/edit/' . $product->id }}">{{ $product->name }}</a></td>
                     <td> {{ $product->trashed() ? 'Нет' : 'Да'}}</td>
                 </tr>
         @endforeach
