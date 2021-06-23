@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 class OrderController
 {
 
-    public function createOrderPage() {
+    public function index() {
         $cart = Cart::getFullInfo();
         return view('catalog.order', [
             'cart' => $cart
@@ -64,7 +64,7 @@ class OrderController
         return $this->orderSuccessPage($order->getAttribute('id'));
     }
 
-    private function orderSuccessPage($order_id) {
+    private function success($order_id) {
         return view('catalog.order_success', [
             'order_id' => $order_id,
         ]);

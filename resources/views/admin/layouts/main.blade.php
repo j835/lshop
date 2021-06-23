@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -16,6 +16,7 @@
     <script src="/js/jquery.js"></script>
     <script src="/js/simpleLightbox.js"></script>
     <script src="/js/admin/jquery.modal.min.js"></script>
+    <script src="/js/admin/ckeditor/ckeditor.js"></script>
 </head>
 
 <body>
@@ -58,9 +59,9 @@
                     <div class="nav-header">Страницы</div>
                     <div class="nav-group">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Создание страниц</a>
+                            <a class="nav-link" href="{{ route('admin.page.create')}}">Создание страниц</a>
                         </li><li class="nav-item">
-                            <a class="nav-link" href="#">Изменение страниц</a>
+                            <a class="nav-link" href="{{ route('admin.page.select')}}">Изменение страниц</a>
                         </li>
                     </div>
 

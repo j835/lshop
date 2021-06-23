@@ -38,6 +38,9 @@ $('.tab-nav').click(function(e) {
     }
 })
 
+
+CKEDITOR.replace('descriptionTextarea');
+
 $(document).ready(function() {
 
     let links = document.querySelectorAll('.category>a');

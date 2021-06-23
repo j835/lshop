@@ -74,7 +74,7 @@
 
                     </div>
                     <label for="exampleTextarea" class="form-label mt-2">Описание товара</label>
-                    <textarea name="description" class="form-control" id="exampleTextarea"
+                    <textarea name="description" class="form-control" id="descriptionTextarea"
                         rows="3">{{ (old('description') ? old('description') : $product->description) ? $product->description : '' }}</textarea>
 
                     <label class="form-label mt-2">Цена</label>
@@ -90,7 +90,7 @@
                         value="{{ (old('new_price') ? old('new_price') : $product->new_price) ? $product->new_price : '' }}">
 
                     <label class="form-label mt-2">SEO description</label>
-                    <textarea name="seo_description" class="form-control" id="exampleTextarea" rows="2">
+                    <textarea name="seo_description" class="form-control" rows="2">
                                                                 {{ (old('seo_description') ? old('seo_description') : $product->seo_description) ? $product->seo_description : '' }}
                                                             </textarea>
 
@@ -105,14 +105,14 @@
                     <div class="row" id="product-actions">
                         <h4>Действия</h4>
                         @if ($product->trashed())
-                            <form action="{{ route('admin.product.unSoftDelete') }}" method="POST">
+                            <form action="{{ route('admin.product.activate') }}" method="POST">
                                 @csrf
                                 @method('POST')
                                 <input type="hidden" name="id" value="{{ $product->id }}">
                                 <button type="submit" class="btn btn-large btn-primary">Активировать товар</button>
                             </form>
                         @else
-                            <form action="{{ route('admin.product.softDelete') }}" method="POST">
+                            <form action="{{ route('admin.product.deactivate') }}" method="POST">
                                 @csrf
                                 @method('POST')
                                 <input type="hidden" name="id" value="{{ $product->id }}">

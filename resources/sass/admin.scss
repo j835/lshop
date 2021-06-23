@@ -330,3 +330,30 @@ body {
     }
 }
 
+#create-page-form {
+    legend {
+        margin-bottom:15px;
+    }
+
+
+    input {
+        max-width: 600px;
+        margin-bottom:10px;
+    }
+
+    .form-label {
+        color: #212529;
+        font-weight: bold;
+        font-size: 15px;
+        margin-bottom:5px;
+    }
+}
+
+#page-actions {
+    display: flex;
+    margin-bottom:20px;
+
+    form {
+        margin-right:25px;
+    }
+}

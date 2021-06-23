@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\DB;
 class ProductEditController extends Controller
 {
 
-    protected $productService;
+    protected $service;
 
-    public function __construct(ProductService $productService)
+    public function __construct(ProductService $service)
     {
-        $this->productService = $productService;
+        $this->service = $service;
     }
 
     public function index(Request $request)
@@ -23,7 +23,7 @@ class ProductEditController extends Controller
         if ($request->q) 
         {
             return view('admin.product.search', [
-                'products' => $this->productService->searchWithDeleted($request->q),
+                'products' => $this->service->searchWithDeleted($request->q),
             ]);
         }  
         
@@ -40,7 +40,7 @@ class ProductEditController extends Controller
     public function editPage($id)
     {
         return view('admin.product.edit', [
-            'product' => $this->productService->getWithDeletedById($id),
+            'product' => $this->service->getWithDeletedById($id),
         ]);
     }
 
@@ -48,7 +48,7 @@ class ProductEditController extends Controller
     public function edit( Request $request)
     {
 
-        $product = $this->productService->getWithDeletedById($request->id);
+        $product = $this->service->getWithDeletedById($request->id);
 
         $request->validate([
             'name' => 'max:255',
@@ -73,7 +73,7 @@ class ProductEditController extends Controller
         return back()->with('success', 'Информация о товаре успешно обновлена');
     }
 
-    public function softDelete(Request $request)
+    public function deactivate(Request $request)
     {
         $product = Product::withTrashed()->find($request->id);
         $product->delete();
@@ -81,7 +81,7 @@ class ProductEditController extends Controller
         return back()->with('success', 'Товар успешно деактивирован');
     }
 
-    public function unSoftDelete(Request $request)
+    public function activate(Request $request)
     {
         $product = Product::withTrashed()->find($request->id);
         $product->restore();
@@ -91,12 +91,12 @@ class ProductEditController extends Controller
 
     public function delete( Request $request)
     {
-        $product = $this->productService->getWithDeletedById($request->id);
+        $product = $this->service->getWithDeletedById($request->id);
         
         DB::beginTransaction();
 
         foreach($product->images as $image) {
-            $this->productService->deleteImage($image->id);
+            $this->service->deleteImage($image->id);
         }
         
         $product->forceDelete();

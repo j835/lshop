@@ -8,14 +8,14 @@
             <div class="big-carousel">
 
                 @foreach($product->images as $image)
-                <a href="{{ config('catalog.img_path') . $image->path }}">
+                <a href="{{ config('catalog.product.img_path') . $image->path }}">
                     <img src="{{ config('catalog.product.img_path') . $image->path }}" alt="detail-image">
                 </a>
                 @endforeach
             </div>
             <div class="small-carousel">
                 @foreach($product->images as $image)
-                <img src="{{ config('catalog.product.preview_path') . $image->preview_path }}" alt="carousel-img">
+                <img src="{{ config('catalog.product.preview_path') . $image->path }}" alt="carousel-img">
                 @endforeach
             </div>
         </div>
@@ -49,10 +49,7 @@
     </div>
     <h2 class="descHeader">Описание:</h2>
     <div class="description" >
-
-        <div class="text">
-
-        </div>
+        {!! $product->description !!}
     </div>
 
 </div>

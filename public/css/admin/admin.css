@@ -277,3 +277,25 @@ body .back-button {
   z-index: 4000;
   display: none !important;
 }
+
+#create-page-form legend {
+  margin-bottom: 15px;
+}
+#create-page-form input {
+  max-width: 600px;
+  margin-bottom: 10px;
+}
+#create-page-form .form-label {
+  color: #212529;
+  font-weight: bold;
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+
+#page-actions {
+  display: flex;
+  margin-bottom: 20px;
+}
+#page-actions form {
+  margin-right: 25px;
+}

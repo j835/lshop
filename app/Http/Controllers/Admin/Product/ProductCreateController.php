@@ -59,7 +59,7 @@ class ProductCreateController extends Controller
 
         DB::commit();
 
-        return redirect('/admin/product/' . $product->id)->with('success', 'Товар успешно создан');
+        return redirect(route('admin.product.edit') . '/' . $product->id)->with('success', 'Товар успешно создан');
 
     }
 

@@ -42,6 +42,11 @@ class AppServiceProvider extends ServiceProvider
             return preg_match('/^[a-z0-9-_]+$/', $value);
         });
 
+        \Validator::extend('page_code', function ($attribute, $value, $parameters, $validator) {
+            
+            return preg_match('/^[a-z0-9-_]+$/', $value) && $value != 'admin' && $value != 'catalog';
+        });
+
         \Validator::extend('price', function ($attribute, $value, $parameters, $validator) {
             return (float)$value > 0.01;
         });

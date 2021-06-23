@@ -39,7 +39,7 @@
             </div>
 
             <label for="exampleTextarea" class="form-label mt-2">Описание товара</label>
-            <textarea name="description" class="form-control" id="exampleTextarea"
+            <textarea name="description" class="form-control" id="descriptionTextarea"
                 rows="3">{{ old('description') }}</textarea>
 
             <label class="form-label mt-2">Цена</label>
@@ -52,7 +52,7 @@
             <input type="text" class="form-control" name="new_price" value="{{ old('new_price') }}">
 
             <label class="form-label mt-2">SEO description</label>
-            <textarea name="seo_description" class="form-control" id="exampleTextarea" rows="2">{{ old('seo_description') }}</textarea>
+            <textarea name="seo_description" class="form-control"  rows="2">{{ old('seo_description') }}</textarea>
 
             <label class="form-label mt-2">SEO keywords</label>
             <input type="text" class="form-control" name="seo_keywords" value="{{ old('seo_keywords') }}">
