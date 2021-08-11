@@ -74,14 +74,4 @@ class CatalogController extends Controller
         ]);
     }
 
-
-    public function test(Request $request)
-    { 
-        app(ProductService::class)->updateAllProductsQuantity();
-    
-        return '123';
-    }
-
-
-
 }

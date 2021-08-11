@@ -31,24 +31,8 @@ class CatalogService
         $this->pathArray = explode('/', $this->path);
     }
 
-
-
-
-    public function routenew($code) {
-        $this->code = $code;
-        $this->codeArray = explode('/', $code);
-
-
-    }
-
-
-    public function getCategory() {
-        
-    }
-
     public function route($code)
     {
-
         if ($this->category = Category::where('full_code', $this->path)->with('subcategories', 'products')->first()) {
 
             if ($this->category->getRelation('subcategories')->count()) {
