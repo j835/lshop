@@ -10,8 +10,8 @@ return [
     ],
 
     'category' => [
-        'img_path' => '/upload/catalog/category/',
-        'preview_path' => '/upload/catalog/category_preview/',
+        'img_path' => '/storage/category/',
     ],
+
 
 ];

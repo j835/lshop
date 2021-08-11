@@ -8,13 +8,21 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="shortcut icon" href="/favicon.ico">
     <title>{{Seo::getTitle()}}</title>
     <link rel="stylesheet" href="/css/bootstrap-grid.min.css">
     <link rel="stylesheet" href="/css/app.css">
     <link rel="stylesheet" href="/css/fontawesome.min.css">
     <link rel="stylesheet" href="/css/solid.min.css">
+    <link rel="stylesheet" href="/css/slick.css">
+    <link rel="stylesheet" href="/css/slick-theme.min.css">
+    <link rel="stylesheet" href="/css/simpleLightbox.css">
+
     <script src="/js/jquery.js"></script>
+    <script src="/js/slick.min.js"></script>
+    <script src="/js/simpleLightbox.js"></script>
     <script src="/js/Cart.js"></script>
+    <script src="/js/SearchBar.js"></script>
     <script src="/js/main.js"></script>
     <script src="https://www.google.com/recaptcha/api.js"></script>
 </head>
@@ -22,7 +30,7 @@
 <div class="container-fluid">
     @include('inc.header_top')
     @include('inc.header')
-    
+    @include('inc.header_mobile')
     <div class="container main">
         <div class="main-row row">
             <div id="sidebar" class="col-md-3 col-12">

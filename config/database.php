@@ -44,6 +44,11 @@ return [
         ],
 
         'mysql' => [
+            'dump' => [
+                'dump_binary_path' => 'D:\Programs\OpenServer\OSPanel\modules\database\MySQL-5.7\bin', // only the path, so without `mysqldump` or `pg_dump`
+                'use_single_transaction',
+                'timeout' => 60 * 5, // 5 minute timeout
+             ],
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),

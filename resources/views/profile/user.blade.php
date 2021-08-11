@@ -10,20 +10,21 @@
     @if(session('success'))
         <div class="success-message">{{session('success')}}</div>
     @endif
-    <form action="" id="profile-user-form" method="POST">
-        @csrf
-        <div class="label">
-            Ф.И.О <i>*</i>
-            <input type="text" name="name" value="{{ $user->name }}">
-        </div>
-        <div class="label">
-            E-mail <i>*</i>
-            <input type="text" name="email" value="{{ $user->email }}">
-        </div>
-        <div class="label">
-            Телефон <i>*</i>
-            <input type="text" name="phone" value="{{ $user->phone }}">
-        </div>
-        <input type="submit" class="submit" value="Изменить личные данные">
-    </form>
+    <div action="" id="profile-user-form" method="POST">
+        <div class="label">Дата регистрации</div>
+        <div class="data">{{ $user->created_at }}</div>
+
+        <div class="label">ФИО</div>
+        <div class="data">{{ $user->name }}</div>
+
+        <div class="label">E-mail</div>
+        <div class="data">{{ $user->email }}</div>
+
+        <div class="label">Телефон</div>
+        <div class="data">{{ $user->phone }}</div>
+
+        <div class="label">Заказов</div>
+        <div class="data">{{ $user->orders->count() }}</div>
+
+    </div>
 @endsection

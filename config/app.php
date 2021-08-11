@@ -1,5 +1,7 @@
 <?php
 
+
+
 return [
 
     /*
@@ -176,11 +178,10 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        
         /*
          * Custom
          */
-
     ],
 
     /*
@@ -236,6 +237,7 @@ return [
         'Cart' => \App\Facades\Cart::class,
         'Seo' => \App\Facades\Seo::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Menu' => \App\Facades\Menu::class,
     ],
 
 ];

@@ -19,9 +19,8 @@ class Order extends Model
         'total',
         'is_cancelled',
         'is_paid',
+        'message'
     ];
-
-
 
 
     public function user()
@@ -33,4 +32,7 @@ class Order extends Model
     {
         return $this->hasMany(OrderProduct::class, 'order_id', 'id');
     }
+
+
+    
 }

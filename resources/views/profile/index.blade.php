@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>Личный кабинет</h1>
-    <div class="page">
+    <div>
         <div id="profile-index" class="row">
             <a href="{{ route('profile.orders') }}/" >
                 <i class="fas fa-list fa-3x"></i>

@@ -20,6 +20,8 @@ class ProductImageController extends Controller
 
     public function changeMain(Request $request)
     {
+        $this->authorize('product.update');
+
         $product = $this->productService->getWithDeletedById($request->product_id);
 
         DB::beginTransaction();
@@ -34,6 +36,8 @@ class ProductImageController extends Controller
 
     public function add(Request $request)
     {
+        $this->authorize('product.update');
+
         $images = $request->except(['_token', 'product_id']);
 
         DB::beginTransaction();
@@ -50,6 +54,8 @@ class ProductImageController extends Controller
 
     public function delete(Request $request)
     {
+        $this->authorize('product.update');
+
         $this->productService->deleteImage($request->img_id);
         return back()->with('success', 'Изображение успешно удалено');
     }

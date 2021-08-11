@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,7 +31,7 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password,])) {
+        if (Auth::attempt(['email' => $request->email, 'password' => trim($request->password),])) {
             return redirect()->route('profile.index');
         } else {
             return back()->withErrors(['login_error' => 'Неверный логин или пароль']);

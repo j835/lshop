@@ -1,45 +1,56 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Profile;
 
+use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\User;
 use App\Services\UserService;
+use Breadcrumb;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
-    public function index() {
+    public function __construct()
+    {
+        Breadcrumb::push('Личный кабинет', 'profile');
+    }
+
+    public function index()
+    {
         return view('profile.index');
     }
 
+    public function user()
+    {
+        Breadcrumb::push('Информация о пользователе', 'personal');
 
-    public function user() {
         return view('profile.user', [
-            'user' => auth()->user(),
+            'user' => User::with('orders')->find(auth()->user()->id),
         ]);
     }
 
-    public function updateUser(Request $request, UserService $userService) {
-        $userService->updateUserInfo($request);
-        return back()->with('success','Личные данные успешно обновлены');
-    }
+    public function orders()
+    {
+        Breadcrumb::push('Мои заказы', 'orders');
 
-    public function orders() {
         return view('profile.orders', [
             'orders' => auth()->user()->orders()->get(),
         ]);
     }
 
+    public function order($id)
+    {
+        Breadcrumb::push('Мои заказы', 'orders');
+        Breadcrumb::push('Заказ № ' . $id, $id);
 
-
-
-    public function order($id) {
-        return view('profile.order' , [
+        return view('profile.order', [
             'order' => auth()->user()->orders()->with('products')->find($id),
         ]);
     }
 
-    public function cancelOrder($id) {
+    public function cancelOrder($id)
+    {
         try {
             $order = Order::find($id);
 

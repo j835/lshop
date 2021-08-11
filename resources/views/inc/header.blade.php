@@ -8,10 +8,9 @@
                 <img src="/img/logo.jpg" alt="logo" class="logo">
             </a>
         </div>
-        <form action="/search/" method="GET" class="col-md-4 search-form">
-            <input type="text" name="query" class="search-input" placeholder="Поиск...">
-            <img src="/img/icon/search.png" alt="search" class="mobile-icon">
-            <div class="search-results">
+        <form action="{{ route('search') }}" method="GET" class="col-md-4" id="search-form">
+            <input type="text" name="q" class="search-input" placeholder="Поиск..." value="{{ request()->q}}">
+            <div id="search-results">
                 <div class=" search-head">
                     <div class="title">
                         Результаты поиска
@@ -25,7 +24,7 @@
                 </div>
 
                 <div class="search-footer">
-                    <a href="#">Все результаты</a>
+                    <a href="">Все результаты</a>
                 </div>
             </div>
         </form>

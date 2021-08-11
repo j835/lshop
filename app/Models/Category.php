@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-   // use HasFactory;
+   use SoftDeletes;
 
     protected $table = 'catalog_categories';
 
@@ -19,24 +20,27 @@ class Category extends Model
         'parent_id',
         'sort',
         'image',
-        'is_active',
         'discount',
         'seo_description',
         'seo_keywords',
     ];
 
-
     public function products()
     {
-        return $this->hasMany(Product::class)->with(['category','main_image'])
-            ->where('is_active', '=', true)->orderBy('sort', 'asc');
+        return $this->hasMany(Product::class)->with(['category','main_image']);
     }
 
 
     public function subcategories() {
-        return $this->hasMany(Category::class, 'parent_id', 'id')
-            ->where('is_active', '=', true);
+        return $this->hasMany(Category::class, 'parent_id', 'id');
     }
 
+    public function parentCategory() {
+        return $this->hasOne(Category::class, 'id', 'parent_id');
+    }
 
+    public function getImagePath() 
+    {
+        return $this->image ? config('catalog.category.img_path') . $this->image : config('catalog.image_not_found');
+    }
 }

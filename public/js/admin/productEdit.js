@@ -1,18 +1,9 @@
-$('#productDeleteForm').submit(function(e) {
-    if(!confirm('Вы действительно хотите навсегда удалить товар? Восстановление невозможно')) {
-        e.preventDefault();
-    }
-})
 
-$('.delete-image-form').submit(function(e) {
-    if(!confirm('Вы действительно хотите удалить изображение? Восстановление невозможно')) {
-        e.preventDefault();
-    }
-})
-
-
+formSubmitConfirm($('#productDeleteForm'), 'Вы действительно хотите навсегда удалить товар? Восстановление невозможно');
+formSubmitConfirm($('.delete-image-form'),'Вы действительно хотите удалить изображение? Восстановление невозможно');
 $('#product-images .card-body>a').simpleLightbox()
-
+CKEDITOR.replace('descriptionTextarea');
+translitBind('iname', 'icode')
 
 let IMG_INPUT_INDEX = 1;
 $('#moreImg').click(function(e) {
@@ -26,7 +17,6 @@ $('#moreImg').click(function(e) {
 
 
 $('.tab-nav').click(function(e) {
-
     if($(this).hasClass('active')) {
         return false;
     } else {
@@ -39,10 +29,7 @@ $('.tab-nav').click(function(e) {
 })
 
 
-CKEDITOR.replace('descriptionTextarea');
-
 $(document).ready(function() {
-
     let links = document.querySelectorAll('.category>a');
     for (let link of links) {
 
@@ -64,9 +51,9 @@ $(document).ready(function() {
             $(link).click(function(e) {
                 e.preventDefault();
                 document.querySelector('#category-id-input').value = link.dataset.id;
+                document.querySelector('#category-name').value = link.textContent;
                 link.rel = 'modal:close';
             })
         }
     }
-
 })

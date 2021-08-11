@@ -12,7 +12,7 @@ class BreadcrumbService
     private $array = [];
 
     public function push($name, $code) {
-        self::init();
+        $this->init();
         $name = trim($name);
         $code = trim($code, " \n\r\t\v\0\\/");
         if(!$name or !$code) {

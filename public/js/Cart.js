@@ -34,15 +34,16 @@ class Cart {
         $('#cart-button .total-price').text(totalPrice)
         $('#cart .cart-head span').text(totalQuantity + ' товаров');
         $('#cart .cart-total span').text(totalPrice + ' ₽');
+        $('#header-mobile .cart .counter').text(totalQuantity);
     }
 
     static addToCart(id) {
         if (!parseInt(id)) {
-            throw new Error('Ошибка - неверный id')
+            throw new Error('Ошибка - неверный id товара')
         }
         let quantity = parseInt($('.quantity[data-id=' + id + ']').text());
-        if (!quantity) {
-            throw new Error('Ошибка - неверное количество');
+        if (quantity === NaN || quantity < 1) {
+            throw new Error('Ошибка - неверное количество товара');
         }
 
         let element = $('.add2cart[data-id=' + id + ']');
@@ -60,6 +61,7 @@ class Cart {
                     throw new Error(json.error);
                 }
                 if (json.success) {
+                    Cart.clearCache();
                     Cart.print(true)
                 }
             })
@@ -69,7 +71,7 @@ class Cart {
         if (!parseInt(id)) {
             throw new Error('Ошибка - неверный id')
         }
-        ajax('/api/cart/', 'DELETE', {
+        return ajax('/api/cart/', 'DELETE', {
             'product_id': id,
         }).then(response => response.json())
             .then(function (json) {
@@ -78,7 +80,8 @@ class Cart {
                     throw new Error(json.error);
                 }
                 if (json.success) {
-                    Cart.print(true)
+                    Cart.clearCache();
+                    Cart.print(true);
                 }
             })
     }

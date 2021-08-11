@@ -13,7 +13,7 @@ use Breadcrumb;
 class CatalogService
 {
     const PRODUCT = 'PRODUCT';
-    const NOT_FOUND = false;
+    const NOT_FOUND = 'NOT_FOUND';
     const CATEGORY = 'CATEGORY';
     const CATEGORIES_LIST = 'CATEGORIES_LIST';
 
@@ -31,9 +31,25 @@ class CatalogService
         $this->pathArray = explode('/', $this->path);
     }
 
-    public function route()
+
+
+
+    public function routenew($code) {
+        $this->code = $code;
+        $this->codeArray = explode('/', $code);
+
+
+    }
+
+
+    public function getCategory() {
+        
+    }
+
+    public function route($code)
     {
-        if ($this->category = CategoryService::getCategoryByFullCode($this->path)) {
+
+        if ($this->category = Category::where('full_code', $this->path)->with('subcategories', 'products')->first()) {
 
             if ($this->category->getRelation('subcategories')->count()) {
                 $this->route_result = self::CATEGORIES_LIST;
@@ -109,7 +125,6 @@ class CatalogService
 
             return printCategories();
         });
-    }
-
+    } 
 
 }

@@ -17,6 +17,7 @@ class Product extends Model
         'code',
         'category_id',
         'description',
+        'quantity',
         'sort',
         'price',
         'new_price',
@@ -88,6 +89,9 @@ class Product extends Model
         return $this->hasMany(ProductImage::class,'product_id', 'id');
     }
 
-
+    public function stores() {
+        return $this->belongsToMany(Store::class, 'product_store', 'product_id', 'store_id')
+            ->withPivot(['quantity']);
+    }
 
 }

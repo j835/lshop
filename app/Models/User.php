@@ -21,7 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'phone'
+        'phone',
+        'role_id'
     ];
 
     /**
@@ -46,5 +47,28 @@ class User extends Authenticatable
 
     public function orders() {
         return $this->hasMany(Order::class, 'user_id', 'id');
+    }
+
+
+    public function roleWithPermissions() {
+        return $this->hasOne(Role::class, 'id', 'role_id')->with('permissions');
+    }
+
+    public function hasPermission($code) {
+        if(!$this->roleWithPermissions) {
+            return false;
+        }
+
+        foreach($this->roleWithPermissions()->permissions as $permission) {
+            if($code === $permission->code) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function role() {
+        return $this->hasOne(Role::class, 'id', 'role_id');
     }
 }

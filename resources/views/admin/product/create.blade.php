@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <a href="{{ route('admin.product.index') }}" class="btn btn-link disabled back-button col-1">
+    <a href="{{ route('admin.product.select') }}" class="btn btn-link disabled back-button col-1">
         ← Назад</a>
     <div class="col-11"></div>
 
@@ -22,40 +22,42 @@
             <legend>Создание товара</legend>
 
             <label class="form-label mt-1">Сортировка</label>
-            <input type="nubmer" class="form-control" name="sort" value="{{ old('sort') ? old('sort') : 500 }}">
+            <input type="nubmer" class="form-control @error('sort') is-invalid @enderror" name="sort" value="{{ old('sort') ? old('sort') : 500 }}">
 
             <label class="form-label mt-2">Наименование</label>
-            <input type="text" class="form-control" name="name" value="{{ old('name') }}">
+            <input id="iname" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}">
 
             <label class="form-label mt-2">Код URL</label>
-            <input type="text" class="form-control" name="code" value="{{ old('code') }}">
+            <input id="icode" type="text" class="form-control @error('code') is-invalid @enderror" name="code" value="{{ old('code') }}">
 
-            <label class="form-label mt-2">ID Категории</label>
+            <label class="form-label mt-2">Категория</label>
             <div class="form-group category-id-group">
-                <input type="text" class="form-control" name="category_id" id="category-id-input"
+                <input type="text" readonly="" class="form-control-plaintext readonly-input" id="category-name"
+                        value="">
+                <input type="hidden" class="form-control" name="category_id" id="category-id-input"
                     value="{{ old('category_id') }}" readonly="">
-                <a href="#chooseCategory" rel="modal:open" class="btn btn-primary">Выбор категории</a>
+                <a href="#productCategorySelect" rel="modal:open" class="btn btn-primary">Выбор категории</a>
 
             </div>
 
             <label for="exampleTextarea" class="form-label mt-2">Описание товара</label>
-            <textarea name="description" class="form-control" id="descriptionTextarea"
+            <textarea name="description" class="form-control @error('description') is-invalid @enderror" id="descriptionTextarea"
                 rows="3">{{ old('description') }}</textarea>
 
             <label class="form-label mt-2">Цена</label>
-            <input type="number" class="form-control" name="price" value="{{ old('price') }}">
+            <input  class="form-control @error('price') is-invalid @enderror" name="price" value="{{ old('price') }}">
 
             <label class="form-label mt-2">Скидка %</label>
-            <input type="text" class="form-control" name="discount" value="{{ old('discount') }}">
+            <input type="text" class="form-control @error('discount') is-invalid @enderror" name="discount" value="{{ old('discount') }}">
 
             <label class="form-label mt-2">Новая цена</label>
-            <input type="text" class="form-control" name="new_price" value="{{ old('new_price') }}">
+            <input type="text" class="form-control @error('new_price') is-invalid @enderror" name="new_price" value="{{ old('new_price') }}">
 
             <label class="form-label mt-2">SEO description</label>
-            <textarea name="seo_description" class="form-control"  rows="2">{{ old('seo_description') }}</textarea>
+            <textarea name="seo_description" class="form-control @error('seo_description') is-invalid @enderror"  rows="2">{{ old('seo_description') }}</textarea>
 
             <label class="form-label mt-2">SEO keywords</label>
-            <input type="text" class="form-control" name="seo_keywords" value="{{ old('seo_keywords') }}">
+            <input type="text" class="form-control @error('seo_keywords') is-invalid @enderror" name="seo_keywords" value="{{ old('seo_keywords') }}">
 
 
             <h5>Изображения</h5>

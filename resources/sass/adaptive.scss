@@ -1,26 +1,124 @@
 @media(max-width: 768px) {
-  .header-top {
+  #header-top {
     display: none;
   }
 
-  .header {
-    .mobile-icon {
-      display: block;
-    }
+  #header {
+    display: none;
+  }
 
-    .burger-wrapper {
-      display: block;
-    }
+  #header-mobile {
+    display: flex;
+  }
 
-    .logo {
-      margin-left: auto;
-      margin-right: auto;
-      display: block;
+  #sidebar {
+    margin-top:0;
+    display: none;
+
+    .catalog-menu {
+      
+
+      .submenu {
+        position: relative;
+        top:0px;
+        left: 0px;
+        width: 100%;
+        opacity: 1;
+        box-shadow: none;
+        border-left:8px solid #FAD42B;
+      }
+
+      .arrow {
+        transform:rotate(90deg);
+        margin-right: 10px;
+      }
+    
     }
   }
-  .search-form {
-    .search-input {
-      display: none;
+
+  #profile-index {
+    a {
+      height: 120px;
+      margin-bottom:10px;
+    }
+  }
+
+  #category {
+    justify-content: center;
+    .category-item {
+      width:85%;
+      .item-buttons {
+        height: 50px;
+        .plus, .counter, .minus, .add2cart {
+          height: 50px !important;
+          line-height: 50px !important;
+        }
+      }
+    }
+  }
+
+  #product-detail-card {
+    margin: 0%;
+      h1 {
+        font-size: 16px;
+      }
+
+      .big-carousel {
+        height: auto !important;
+        width: auto !important;
+      }
+
+      .small-carousel {
+        display: none;
+      }
+
+      .stock {
+        margin-left:20px;
+        margin-top:20px;
+      }
+
+      .prices {
+        padding-left:25px;
+      }
+  }
+
+  #cart-page, #order-form {
+    .cart-products {
+      .order-cart-product {
+        padding:5px !important;
+      }
+
+      .cart-product-info {
+        padding:5px !important;
+        a {
+          font-size: 18px !important;
+        }
+      }
+
+      .cart-delete {
+        left:0px;
+      }
+
+      .submit {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    .cart-product-cost {
+      font-size: 14px !important;
+      span {
+        display: block;
+        font-size: 20px;
+      }
+    }
+  }
+  
+  footer {
+    padding-left:15px;
+    .socials {
+      padding:0;
+      margin-top:8px;
     }
   }
 }

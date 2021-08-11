@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin\Product;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Product\CreateProductRequest;
+use App\Models\Category;
 use App\Models\Product;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
@@ -18,48 +20,31 @@ class ProductCreateController extends Controller
         $this->productService = $productService;
     }
 
-    public function index(Request $request)
+    public function index()
     {
+        $this->authorize('product.get');
         return view('admin.product.create');
     }
 
-    public function create(Request $request)
+    public function create(CreateProductRequest $request)
     {
-        $request->validate([
-            'name' => 'max:255',
-            'code' => 'required|code|max:255|unique:catalog_products',
-            'sort' => 'integer|min:1',
-            'category_id' => 'integer|min:1',
-            'price' => 'price',
-            'discount' => 'nullable|integer|between:1,100',
-            'new_price' => 'nullable|price',
-            'seo_description' => 'nullable|max:255',
-            'seo_keywords' => 'nullable|max:255',
-        ]);
+        $this->authorize('product.create');
 
         DB::beginTransaction();
 
-        $product = Product::create($request->only([
-            'name', 'code', 'sort', 'description', 'category_id', 'price', 'discount', 'new_price', 'seo_description', 'seo_keywords',
-        ]));
-
-        for ($i = 0; true; $i++) {
-            $input = 'image_' . $i;
-            if ($request->$input) 
+        $product = Product::create($request->validated());
+        
+        foreach($request->all() as $key => $value) {
+            if(preg_match('/^image_[0-9]+$/', $key)) 
             {
-                $request->validate([
-                    $input => 'nullable|image|max:10000',
-                ]);
-
-                $this->productService->addImage($product->id, $request->$input);
-            } else {
-                break;
+                $request->validate([$key => 'nullable|image|max:5000']);
+                $this->productService->addImage($product->id, $value);
             }
         }
 
         DB::commit();
 
-        return redirect(route('admin.product.edit') . '/' . $product->id)->with('success', 'Товар успешно создан');
+        return redirect( route('admin.product.update' , ['id' => $product->id]) )->with('success', 'Товар успешно создан');
 
     }
 

@@ -11,14 +11,107 @@ html, body {
 }
 
 body {
+
+    .light-border-bottom {
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .page-link {
+        background-color: #405c79 !important;     
+    }
+
+    .page-link:hover {
+        background-color:#2c3e50 !important;
+    }
+
+    .active .page-link {
+        background-color:#2c3e50 !important;
+    }
+
+    .disabled .page-link {
+        background-color:#5a738d !important;
+    }
+
+    .plink {
+        color:#eeeeee;
+        transition: 200ms;
+        font-size: 15px;
+    }
+
+    .plink:hover {
+        color: white;
+    }
+
+    .role-create {
+        font-size: 26px;
+        text-decoration: none !important;
+        padding: 0px;
+    }
+
+    .input-hint {
+        margin-left:5px;
+        display: inline-block;
+
+    }
+
+    .alert {
+        margin-right: auto;
+        width: 95%;
+    }
+
+    .tlink {
+        color: #212529;
+        text-decoration: underline;
+    }
+
+    .tlink:hover {
+        color: #212529da;
+        text-decoration: none;
+    }
+
+    .form-label {
+        color: #212529;
+        font-weight: bold;
+        font-size: 15px;
+    }
+
+    .form-select {
+        cursor: pointer;
+    }
+
+    option {
+        cursor: pointer;
+    }
+
+    th.id {
+        padding:0;
+        a {
+            color: #253544;
+            display: block;
+            width:100%;
+            height: 100%;
+            line-height:2.5;
+            padding-left:5px;
+        }
+    }
+
+    .readonly-input {
+        padding:5px;
+        margin-bottom:5px;
+        margin-top:5px;
+        border-left:2px solid rgba(0,0,0,0.1);
+
+    }
+
     .fatal-error {
         color: #721c24;
         background-color: #f8d7da;
         border-color: #f5c6cb;
-        margin-left:auto;
-        margin-right: auto;
+        margin-right:auto;
         width: 95%;
         font-size: 20px;
+        margin-top:15px;
+        margin-bottom:15px;
     }
 
 
@@ -72,6 +165,17 @@ body {
 
 #header {
     height:70px;
+
+    .user-link {
+        color:white;
+        font-size: 18px;
+        margin-left: auto;
+        margin-right: 10px;
+        i {
+            margin-right: 5px;
+        }
+    }
+
     button.logout {
 
     }
@@ -91,11 +195,28 @@ body {
     .nav-header {
         font-size: 18px;
         padding: 5px 10px;
+        cursor: pointer;
+
+        i {
+            opacity: 0.7;
+            font-size: 15px;
+            margin: 6px;
+        }
+    }
+
+    .nav-header.opened {
+        background-color:#2c3e50;
+        color:white;
+
+        i {
+            transform:  rotate(90deg);
+        }
     }
 
     .nav-group {
         margin-left: 15px;
         border-left: 1px solid rgba(0,0,0,0.1);
+        display: none;
     }
 
     .nav-link {
@@ -124,23 +245,23 @@ body {
 #search-form {
     display: flex;
     align-items: center;
-    input.search {
-        flex-grow: 1;
+    input {
+        width: 40%;
     }
 
     button {
         width: 100px;
-        margin-left:15px;
+        margin-left:10px;
     }
 }
 
 #search-result-table {
     a:hover {
-        text-decoration: underline;
+        //text-decoration: underline;
     }
 }
 
-#categories-dropdown-list {
+#productCategorySelect .categories-list,  #product-index {
     .submenu {
         display: none;
         margin-left:8px;
@@ -174,13 +295,22 @@ body {
     }
 }
 
+#categoryCategorySelect .categories-list {
+    .submenu {
+        margin-left:8px;
+        border-left:1px solid gray;
+        padding-left:8px;
+    }
+    
+    a {
+        color:#212529;
+    }
+}
+
+
 #product-edit, #product-create {
     border-right: 1px solid rgba(0,0,0,0.1);
-    .form-label {
-        color: #212529;
-        font-weight: bold;
-        font-size: 15px;
-    }
+
 
     .category-id-group {
         display: flex;
@@ -294,6 +424,38 @@ body {
     }
 }
 
+#product-stores {
+    .store {
+        display: flex;
+        font-size: 18px;
+        align-items: center;
+        margin-bottom: 10px;
+        border-left: 4px solid #253544;
+        padding-left: 10px;
+
+        span {
+            cursor: pointer;
+        }
+
+        a {
+            font-size: 14px;
+            display: inline-block;
+            height: 14px;
+            color:#253544;
+            text-decoration: underline;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        input {
+            max-width: 50px;
+            margin-left:auto;
+            text-align: center;
+        }
+    }
+}
 
 #product-create {
     .add-image-form {
@@ -341,12 +503,7 @@ body {
         margin-bottom:10px;
     }
 
-    .form-label {
-        color: #212529;
-        font-weight: bold;
-        font-size: 15px;
-        margin-bottom:5px;
-    }
+
 }
 
 #page-actions {
@@ -355,5 +512,83 @@ body {
 
     form {
         margin-right:25px;
+    }
+}
+
+.user-actions {
+    button {
+        width:190px;
+    }
+}
+
+#role-edit {
+    h5 {
+        margin-left:6px;
+    }
+    .form-switch  {
+        margin-left:12px;
+    }
+}
+
+.role-actions {
+    padding-left:10px;
+    border-left:1px solid rgba(0,0,0,0.1);
+}
+
+.order-user-link {
+   border-left: 2px solid rgba(0, 0, 0, 0.1);
+   padding:5px;
+}
+
+#group-filter-form {
+    select {
+        display: inline-block;
+        width:40%;
+    }
+
+    button {
+        width: 100px;
+        margin-left:10px;
+    }
+}
+
+
+.category-edit-filler {
+    border-right: 1px solid rgba(0,0,0,0.1);
+}
+
+
+#update-menu-items,#add-menu-items, #create-menu-form {
+    .labels {
+        label {
+            display: inline-block;
+            width: 34%;
+            text-align: center;
+        }
+        label.sort {
+            width:29%;
+            text-align: start;
+            padding-left:20px;
+        }
+    }
+
+    .inputs {
+        width: 100%;
+        margin-top:6px;
+
+        button {
+            width: 7%;
+            display: inline-block;
+        }
+
+        input {
+            display: inline-block;
+            width: 35%;
+            margin-left: 2px;
+        }
+
+        input.sort {
+            width:15%;
+        }
     }
 }

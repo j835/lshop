@@ -18,8 +18,10 @@ class CreateOrdersTable extends Migration
 
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')
-                ->nullOnDelete();
+                ->onDelete('cascade');
 
+            
+            $table->string('message')->nullable();
             $table->decimal('total', 11, 2);
             $table->boolean('is_cancelled')->default(false);
             $table->boolean('is_paid')->default(false);

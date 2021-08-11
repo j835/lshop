@@ -107,4 +107,6 @@ return [
         ],
     ],
 
+    'manager' => 'dmitriprln@gmail.com',
+
 ];
