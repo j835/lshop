@@ -29,7 +29,7 @@
 
                 <h1 class="fatal-error alert">Доступ запрещен</h1>
             </div>
-
+            <a href="{{ route('login') }}" class="btn btn-primary" style="width:200px;margin-left:20px;">Вход</a>
             <div id="footer" class="col-12"></div>
         </div>
     </div>

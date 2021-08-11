@@ -21,7 +21,7 @@
             </label>
             @if(!config('app.debug'))
                 Защита от автоматического заполнения: <br>
-                <div class="g-recaptcha" data-sitekey="{{ config('app.recaptcha_site_key') }}"></div>
+                <div class="g-recaptcha" data-sitekey="{{ config('recaptcha.public_key') }}"></div>
             @endif
             @csrf
             <input type="submit" value="Войти" class="submit">

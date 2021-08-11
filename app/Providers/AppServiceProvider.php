@@ -37,7 +37,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         \Validator::extend('recaptcha', function ($attribute, $value, $parameters, $validator) {
-            $recaptcha = new ReCaptcha(config('app.recaptcha_secret_key'));
+            $recaptcha = new ReCaptcha(config('recaptcha.secret_key'));
             $resp = $recaptcha->verify($value, request()->ip());
 
             return $resp->isSuccess();
