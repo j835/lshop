@@ -10,4 +10,5 @@ CKEDITOR.editorConfig = function( config ) {
 
 	config.defaultLanguage = 'ru';
 	config.language = 'ru';
+	config.allowedContent = true;
 };
