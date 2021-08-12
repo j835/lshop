@@ -36,7 +36,18 @@ class MenuService
 
         $item = MenuItem::find($id);
         $item->update($data);
-        
+    
+    }
+
+    public function clearCacheByCode($code) 
+    {
+        cache()->forget('_menu.' . $code);
+    }
+
+    public function clearCacheById($id)
+    {
+        $menu = Menu::find($id);
+        $this->clearCacheByCode($menu->code);
     }
 
 

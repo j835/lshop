@@ -1,6 +1,8 @@
 <div id="header-top" class="row header-top col-9">
     <div class="header-menu col-7">
-        <a href="/how-to-buy/">Как купить</a><a href="/delivery/">Доставка</a><a href="/contacts/">Контакты</a>
+        @foreach (Menu::get('header') as $item)
+            <a href="{{ $item->link }}">{{ $item->name }}</a>            
+        @endforeach
     </div>
     <div class="contacts col-5">
         <div>ул. Гамарника 86-12 &nbsp</div>

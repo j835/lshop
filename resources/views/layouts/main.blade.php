@@ -28,6 +28,11 @@
 </head>
 <body>
 <div class="container-fluid">
+    @can('admin')
+        <div id="admin-link" class="row">
+            <a href="{{ route('admin.index')}}">Панель Администратора</a>    
+        </div>        
+    @endcan
     @include('inc.header_top')
     @include('inc.header')
     @include('inc.header_mobile')

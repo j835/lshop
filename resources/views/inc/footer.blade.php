@@ -4,9 +4,9 @@
     </div>
     <div class="col-md-3 sitemap">
         <span>Карта сайта</span>
-        <a href="/catalog/">Каталог</a>
-        <a href="/how-to-buy/">Как купить</a>
-        <a href="/contacts/">Контакты</a>
+        @foreach (Menu::get('footer') as $item)
+            <a href="{{ $item->link }}">{{ $item->name }}</a>
+        @endforeach
     </div>
     <div class="socials col-md-3">
         <a href="https://instagram.com/gadget_dv_" target="_blank">INSTAGRAM<img src="/img/icon/ig_small.png" alt=""></a>

@@ -45,8 +45,9 @@
             @if ($menu->items->count())
                 <form id="update-menu-items" class="mb-2" method="POST" action="{{ route('admin.menu.update_items') }}">
                     @csrf
+                    <input type="hidden" name="menu_id" value="{{ $menu->id }}">
                     <div class="labels">
-                        <label class="form-label">Имя</label>
+                        <label class="form-label">Текст</label>
                         <label class="form-label">Ссылка</label>
                         <label class="form-label sort">Сортировка</label>
                     </div>
