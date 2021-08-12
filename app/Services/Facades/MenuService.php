@@ -12,7 +12,12 @@ class MenuService
     public function get($code) 
     {
         return cache()->rememberForever('_menu.' . $code, function() use ($code) {
-            return Menu::with('items')->where('code', $code)->firstOrFail()->items;
+            $menu = Menu::with('items')->where('code', $code)->first();
+            if(!$menu) {
+                return [];
+            } else {
+                return $menu->items;
+            }
         });
     }
 
