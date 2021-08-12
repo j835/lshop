@@ -23,6 +23,15 @@
 
             <div class="info col-md-6 col-12">
                 <div class="stock">В НАЛИЧИИ</div>
+                <div class="stores">
+                    <h4>Наличие</h4>
+                    @foreach ($product->stores as $store)
+                        <div class="store">
+                            <div>{{ $store->address  }}</div>
+                            <div class="quantity">{{ $store->getQuantity() . ' шт' }}</div>
+                        </div>
+                    @endforeach
+                </div>
                 <div class="buy">
                     <div class="prices">
                         @if ($product->discount or $product->new_price)
@@ -37,15 +46,13 @@
                             <div class="quantity unselectable" data-id="{{ $product->id }}">1</div>
                             <div class="plus unselectable" onclick="Cart.plus({{ $product->id }})">+</div>
                         </div>
-                        <div class="add2cart" onclick="Cart.addToCart({{ $product->id }})" data-id="{{ $product->id }}">
+                        <div class="add2cart" data-quantity="{{ $product->quantity }}" onclick="Cart.addToCart({{ $product->id }})" 
+                            data-id="{{ $product->id }}">
                             В корзину
                         </div>
                     </div>
                 </div>
-
-                <div class="properties">
-
-                </div>
+                
             </div>
         </div>
         <h2 class="descHeader">Описание:</h2>

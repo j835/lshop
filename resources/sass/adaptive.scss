@@ -77,8 +77,24 @@
         margin-top:20px;
       }
 
+      .stores {
+        margin-left:20px;
+      }
+
       .prices {
         padding-left:25px;
+      }
+      .counter {
+        .plus, .minus, .quantity {
+          width:35px !important;
+          height: 35px !important;
+          line-height: 35px !important;
+          
+        }
+
+        .quantity {
+          font-size: 14px !important;
+        }
       }
   }
 

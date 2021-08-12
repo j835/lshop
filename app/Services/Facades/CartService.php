@@ -13,6 +13,7 @@ class CartService
     private const ERR_NOT_IN_CART = 'Товар отсутствует в корзине';
     private const ERR_WRONG_QUANTITY = 'Неверное количество товара';
 
+
     const SESSION_KEY = 'CART';
 
 
@@ -57,16 +58,21 @@ class CartService
     public function push(int $product_id, int $quantity)
     {
         $session = $this->getSession();
+        $product = Product::find($product_id);
 
         if (isset($session[$product_id])) {
             throw new \Exception(self::ERR_ALREADY_IN_CART);
         }
 
-        if (!Product::find($product_id)) {
+        if (!$product) {
             throw new \Exception(self::ERR_WRONG_ID);
         }
 
         if($quantity < 1) {
+            throw new \Exception(self::ERR_WRONG_QUANTITY);
+        }
+
+        if($quantity > $product->quantity) {
             throw new \Exception(self::ERR_WRONG_QUANTITY);
         }
 

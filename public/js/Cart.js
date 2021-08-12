@@ -47,7 +47,11 @@ class Cart {
         }
 
         let element = $('.add2cart[data-id=' + id + ']');
+
         if (element.hasClass('disabled')) {
+            return false;
+        }
+        if(quantity > element[0].dataset.quantity) {
             return false;
         }
 
@@ -88,6 +92,13 @@ class Cart {
 
     static plus(id) {
         let element = $('.quantity[data-id=' + id + ']')
+        let quantity = $('.add2cart[data-id=' + id + ']')
+
+        if(parseInt(element.text()) + 1 > quantity[0].dataset.quantity) {
+            alert('Максимальное количество данного товара - ' + parseInt(element.text()));
+            return false;
+        }
+
         element.text(parseInt(element.text()) + 1);
     }
 

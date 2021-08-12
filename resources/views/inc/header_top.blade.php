@@ -5,7 +5,7 @@
         @endforeach
     </div>
     <div class="contacts col-5">
-        <div>ул. Гамарника 86-12 &nbsp</div>
+        <div>ул. Ленина 66 &nbsp</div>
         <div>8-914-405-43-43 &nbsp</div>
     </div>
 </div>

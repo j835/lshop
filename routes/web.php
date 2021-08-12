@@ -51,10 +51,10 @@ use Illuminate\Support\Facades\Route;
 Route::pattern('code', '[a-zA-Z0-9-/_]+');
 Route::pattern('id', '[0-9]+');
 
-Route::get('/test/', [CatalogController::class, 'test']);
 
 # Catalog #
 Route::get('/', [PageController::class, 'mainPage']);
+Route::get('/catalog', [PageController::class, 'mainPage']);
 Route::get('/catalog/{code}', [CatalogController::class, 'index']);
 Route::get('/search/', [SearchController::class, 'index'])->name('search');
 

@@ -24,7 +24,8 @@
                         <div class="quantity unselectable" data-id="{{$product->id }}">1</div>
                         <div class="plus unselectable" onclick="Cart.plus({{$product->id}})">+</div>
                     </div>
-                    <div class="add2cart unselectable" onclick="Cart.addToCart({{$product->id}})" data-id="{{$product->id}}">
+                    <div class="add2cart unselectable" onclick="Cart.addToCart({{$product->id}})" data-id="{{$product->id}}"
+                         data-quantity="{{ $product->quantity }}">
                         В корзину
                     </div>
                 </div>
