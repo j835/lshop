@@ -13,7 +13,6 @@ class MenuUpdateController extends Controller
  
     public function index($id) 
     {
-        dd(Menu::get('footer'));
         return view('admin.menu.update', [
             'menu' => Menu::getById($id),
         ]);
