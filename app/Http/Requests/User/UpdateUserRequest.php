@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\User;
 
+use App\Services\UserService;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateUserRequest extends FormRequest
