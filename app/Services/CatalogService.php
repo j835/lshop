@@ -33,7 +33,7 @@ class CatalogService
 
     public function route($code)
     {
-        if ($this->category = Category::where('full_code', $this->path)->with('subcategories', 'products')->first()) {
+        if ($this->category = Category::where('full_code', $this->path)->with('subcategories', 'catalog_products')->first()) {
 
             if ($this->category->getRelation('subcategories')->count()) {
                 $this->route_result = self::CATEGORIES_LIST;

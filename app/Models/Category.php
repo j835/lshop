@@ -27,7 +27,15 @@ class Category extends Model
 
     public function products()
     {
-        return $this->hasMany(Product::class)->with(['category','main_image']);
+        return $this->hasMany(Product::class)
+        ->with(['category','main_image']);
+    }
+
+    public function catalog_products()
+    {
+        return $this->hasMany(Product::class)
+        ->where('quantity', '>', 0)
+        ->with(['category','main_image']);
     }
 
 

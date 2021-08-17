@@ -31,7 +31,7 @@ class UpdateCategoryRequest extends FormRequest
             'code' => 'required|max:255|code|unique:catalog_categories,code,' . $this->id . ',id',
             'sort' => 'required|integer',
             'parent_id' => 'required|integer',
-            'discount' => 'nullable|integer|between:1,100',
+            'discount' => 'nullable|integer|between:0,100',
             'seo_description' => 'nullable|max:255',
             'seo_keywords' => 'nullable|max:255',
         ];

@@ -61,19 +61,19 @@ class CartService
         $product = Product::find($product_id);
 
         if (isset($session[$product_id])) {
-            throw new \Exception(self::ERR_ALREADY_IN_CART);
+            throw new \Exception('Товар уже есть в козрине');
         }
 
         if (!$product) {
-            throw new \Exception(self::ERR_WRONG_ID);
+            throw new \Exception('Неправильный id товара');
         }
 
         if($quantity < 1) {
-            throw new \Exception(self::ERR_WRONG_QUANTITY);
+            throw new \Exception('Неверное количество товара');
         }
 
         if($quantity > $product->quantity) {
-            throw new \Exception(self::ERR_WRONG_QUANTITY);
+            throw new \Exception('Максимальное количество данного товара - ' . $product->quantity);
         }
 
         $session[$product_id] = $quantity;
@@ -87,7 +87,7 @@ class CartService
         $session = $this->getSession();
 
         if (!isset($session[$product_id])) {
-            throw new \Exception(self::ERR_NOT_IN_CART);
+            throw new \Exception('Товар отсутствует в корзине');
         }
 
         unset($session[$product_id]);

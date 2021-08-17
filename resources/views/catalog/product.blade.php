@@ -22,15 +22,21 @@
             </div>
 
             <div class="info col-md-6 col-12">
-                <div class="stock">В НАЛИЧИИ</div>
+                @if ($product->quantity > 0)
+                    <div class="stock">В НАЛИЧИИ</div>
+                @else
+                    <div class="stock" style="background-color: red">ОТСУТСТВУЕТ</div>
+                @endif
                 <div class="stores">
-                    <h4>Наличие</h4>
-                    @foreach ($product->stores as $store)
-                        <div class="store">
-                            <div>{{ $store->address  }}</div>
-                            <div class="quantity">{{ $store->getQuantity() . ' шт' }}</div>
-                        </div>
-                    @endforeach
+                    @if ($product->quantity > 1)
+                        <h4>Наличие</h4>
+                        @foreach ($product->stores as $store)
+                            <div class="store">
+                                <div>{{ $store->address }}</div>
+                                <div class="quantity">{{ $store->getQuantity() . ' шт' }}</div>
+                            </div>
+                        @endforeach
+                    @endif
                 </div>
                 <div class="buy">
                     <div class="prices">
@@ -46,13 +52,13 @@
                             <div class="quantity unselectable" data-id="{{ $product->id }}">1</div>
                             <div class="plus unselectable" onclick="Cart.plus({{ $product->id }})">+</div>
                         </div>
-                        <div class="add2cart" data-quantity="{{ $product->quantity }}" onclick="Cart.addToCart({{ $product->id }})" 
-                            data-id="{{ $product->id }}">
-                            В корзину
+                        <div class="add2cart @if ($product->quantity < 1) disabled @endif" data-quantity="{{ $product->quantity }}"
+                                onclick="Cart.addToCart({{ $product->id }})" data-id="{{ $product->id }}">
+                                В корзину
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
         <h2 class="descHeader">Описание:</h2>
@@ -82,7 +88,8 @@
             });
 
             $('.big-carousel a').simpleLightbox({
-                /* options */ });
+                /* options */
+            });
         })
     </script>
 @endsection

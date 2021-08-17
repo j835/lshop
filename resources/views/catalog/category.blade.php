@@ -2,7 +2,7 @@
 
 @section('content')
     <div id="category">
-        @foreach($category->products as $product)
+        @foreach($category->catalog_products as $product)
             <div class="category-item">
                 <div class="image-wrapper">
                     <a href="{{$product->getFullLink()}}">
