@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 
 class MenuSelectController extends Controller
 {
-    public function index() {
+    public function index() 
+    {
         return view('admin.menu.select', [
             'menus' => Menu::all(),
         ]);

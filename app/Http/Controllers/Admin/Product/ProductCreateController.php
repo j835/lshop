@@ -15,9 +15,9 @@ class ProductCreateController extends Controller
     
     protected $productService;
 
-    public function __construct(ProductService $productService)
+    public function __construct()
     {
-        $this->productService = $productService;
+        $this->productService = new ProductService;
     }
 
     public function index()
@@ -44,7 +44,7 @@ class ProductCreateController extends Controller
 
         DB::commit();
 
-        return redirect( route('admin.product.update' , ['id' => $product->id]) )->with('success', 'Товар успешно создан');
+        return redirect(route('admin.product.update' , ['id' => $product->id]) )->with('success', 'Товар успешно создан');
 
     }
 

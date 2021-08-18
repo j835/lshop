@@ -18,7 +18,7 @@ class ProductUpdateController extends Controller
 
     public function __construct(ProductService $productService)
     {
-        $this->productService = $productService;
+        $this->productService = new ProductService;
     }
 
     
@@ -27,7 +27,7 @@ class ProductUpdateController extends Controller
         $this->authorize('product.get');
 
         return view('admin.product.update', [
-            'product' => $this->productService->getWithDeletedById($id),
+            'product' => $this->productService->getById($id, true),
         ]);
     }
 
@@ -43,7 +43,7 @@ class ProductUpdateController extends Controller
 
     public function stores($id, Request $request) 
     {
-        $product = $this->productService->getWithDeletedById($id);
+        $product = $this->productService->getById($id, true);
         $stores = Store::all();
         
         DB::beginTransaction();
@@ -88,7 +88,7 @@ class ProductUpdateController extends Controller
     {
         $this->authorize('product.delete');
 
-        $product = $this->productService->getWithDeletedById($request->id);
+        $product = $this->productService->getById($request->id, true);
         
         DB::beginTransaction();
 

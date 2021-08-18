@@ -10,11 +10,9 @@ use Illuminate\Http\Request;
 class MenuCreateController extends Controller
 {
     public function index() 
-    {
-        
+    {        
         return view('admin.menu.create');
     }
-
 
     public function create(Request $request) 
     {

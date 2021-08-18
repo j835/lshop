@@ -11,9 +11,9 @@ class StoreUpdateController extends Controller
 {
     protected $productService;
 
-    public function __construct(ProductService $productService)
+    public function __construct()
     {
-        $this->productService = $productService;
+        $this->productService = new ProductService;
     }
 
     public function index($id) 

@@ -5,7 +5,9 @@ namespace App\Services\Facades;
 
 use App\Models\Menu;
 use App\Models\MenuItem;
+use App\Models\Category;
 use Validator;
+
 
 class MenuService
 {
@@ -85,6 +87,47 @@ class MenuService
         
 
        return $validator->passes();
+    } 
+
+
+    public static function getCatalogMenuString()
+    {
+        return cache()->rememberForever('catalog_menu', function () {
+            function printCategories($parent_id = 0)
+            {
+                if ($parent_id == 0) {
+                    $menu = '<div class="catalog-menu">';
+                } else {
+                    $menu = '';
+                }
+                $categories = Category::where('parent_id', $parent_id)->get();
+
+                foreach ($categories as $category) {
+                    $link = '/catalog/' . $category->getAttribute('full_code') . '/';
+                    $name = $category->getAttribute('name');
+                    $id = $category->getKey();
+
+                    $menu .= "<div class='category'><a data-id='$id' href='$link'>$name</a>";
+
+                    if ($arrowFlag = Category::where('parent_id', $id)->count()) {
+                        $menu .= '<div class="submenu">';
+                        $menu .= printCategories($id);
+                        $menu .= '</div>';
+                    }
+
+                    if ($arrowFlag) {
+                        $menu .= '<div class="arrow"></div>';
+                    }
+                    $menu .= '</div>';
+                }
+                if ($parent_id == 0) {
+                    $menu .= '</div>';
+                }
+                return $menu;
+            }
+
+            return printCategories();
+        });
     } 
 
 }

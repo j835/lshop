@@ -18,7 +18,8 @@ class MenuUpdateController extends Controller
         ]);
     }
 
-    public function update(Request $request) {
+    public function update(Request $request) 
+    {
         $request->validate([
             'name' => 'max:255|required',
             'code' => 'code|required',

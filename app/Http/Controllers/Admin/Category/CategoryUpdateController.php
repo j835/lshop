@@ -15,9 +15,9 @@ class CategoryUpdateController extends Controller
 {
     protected $categoryService;
 
-    public function __construct(CategoryService $categoryService)
+    public function __construct()
     {
-        $this->categoryService = $categoryService;
+        $this->categoryService = new CategoryService();
     }
 
     public function index($id)

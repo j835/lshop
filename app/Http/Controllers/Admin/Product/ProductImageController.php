@@ -15,14 +15,14 @@ class ProductImageController extends Controller
 
     public function __construct(ProductService $productService)
     {
-        $this->productService = $productService;
+        $this->productService = new ProductService;
     }
 
     public function changeMain(Request $request)
     {
         $this->authorize('product.update');
 
-        $product = $this->productService->getWithDeletedById($request->product_id);
+        $product = $this->productService->getById($request->product_id, true);
 
         DB::beginTransaction();
 

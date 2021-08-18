@@ -9,16 +9,6 @@ use App\Models\Category;
 
 class CategoryService
 {
-
-    public static function getBreadcrumbCategories($array) 
-    {
-        return  Category::where(function ($query) use ($array) {
-            foreach ($array as $code) {
-                $query->orWhere('code', $code);
-            }
-        })->orderBy('level', 'asc')->get();
-    }
-
     public function addImage($id, $image) 
     {
         $photo = Image::make($image)->encode('jpg', 100);
@@ -42,10 +32,6 @@ class CategoryService
         ]);
 
     }
-    
-    /**
-     *  Удаляет категорию
-     */
 
     public function deleteCategory($id) 
     {
@@ -53,7 +39,6 @@ class CategoryService
         $this->deleteImage($id);
         $category->forceDelete();
     }
-
 
     public function updateFullCodes() 
     {
@@ -87,5 +72,6 @@ class CategoryService
         cache()->forget('catalog_menu');
     }
 
+    
 
 }

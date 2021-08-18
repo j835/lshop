@@ -17,18 +17,26 @@ class ProductService
         });
     }
 
-    public static function getByCode($code)
+    public function getByCode($code, $include_deleted = false)
     {
-        return Product::where('code', $code)
-            ->with(['images', 'category', 'stores'])
-            ->first();
+        if($include_deleted) {
+            $product = Product::where('code', $code);
+        } else {
+            $product = Product::withTrashed()->where('code', $code);
+        }
+
+        return $product->with(['images', 'category', 'stores'])->first();
     }
 
-    public function getWithDeletedById($id)
+    public function getById($id, $include_deleted = false)
     {
-        return Product::withTrashed()->where('id', $id)
-            ->with(['images', 'category', 'stores'])
-            ->first();
+        if($include_deleted) {
+            $product = Product::where('id', $id);
+        } else {
+            $product = Product::withTrashed()->where('id', $id);
+        }
+
+        return $product->with(['images', 'category', 'stores'])->first();
     }
 
     public function search($query, bool $include_deleted = false, int $limit = 0)
@@ -74,7 +82,6 @@ class ProductService
         ]);
 
         $image->save();
-
     }
 
     public function deleteImage($img_id)
@@ -83,7 +90,7 @@ class ProductService
         $path = $img->path;
         Storage::delete([config('storage.product_img') . $path, config('storage.product_img_prevew') . $path]);
         if ($img->is_main) {
-            if ($new_main = ProductImage::where('product_id', '=', $img->product_id)->where('is_main', '=', 0)->first()) {
+            if ($new_main = ProductImage::where('product_id', $img->product_id)->where('is_main', '=', 0)->first()) {
                 $new_main->is_main = 1;
                 $new_main->update();
             }

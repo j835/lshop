@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
-use App\Services\CatalogService;
-use App\Services\ProductService;
+use App\Services\CatalogRouter;
 use Illuminate\Http\Request;
 use Seo;
 
@@ -13,25 +11,22 @@ use Seo;
 class CatalogController extends Controller
 {
 
-    private $service;
-
-    public function __construct(CatalogService $service)
-    {
-        $this->service = $service;
-    }
+    private $router;
 
     public function index($code, Request $request)
     {
+        // todo - cache 
+        $this->router = new CatalogRouter($request);
 
-        $this->service->route($code);
-        $this->service->formBreadcrumb();
+        $this->router->route($code);
+        $this->router->formBreadcrumb();
 
-        switch ($this->service->route_result) {
-            case CatalogService::PRODUCT:
+        switch ($this->router->route_result) {
+            case CatalogRouter::PRODUCT:
                 return $this->product();
-            case CatalogService::CATEGORY:
+            case CatalogRouter::CATEGORY:
                 return $this->category();
-            case CatalogService::CATEGORIES_LIST:
+            case CatalogRouter::CATEGORIES_LIST:
                 return $this->categoriesList();
 
             default:
@@ -42,35 +37,35 @@ class CatalogController extends Controller
 
     private function product()
     {
-        Seo::setDescription($this->service->product->getSeoDescription());
-        Seo::setKeywords($this->service->product->getSeoKeywords());
-        Seo::setTitle($this->service->product->getAttribute('name'));
+        Seo::setDescription($this->router->product->getSeoDescription());
+        Seo::setKeywords($this->router->product->getSeoKeywords());
+        Seo::setTitle($this->router->product->getAttribute('name'));
 
         return view('catalog.product', [
-            'product' => $this->service->product,
+            'product' => $this->router->product,
         ]);
     }
 
     public function category()
     {
-        Seo::setDescription($this->service->category->getAttribute('seo_description'));
-        Seo::setKeywords($this->service->category->getAttribute('seo_keywords'));
-        Seo::setTitle($this->service->category->getAttribute('name'));
+        Seo::setDescription($this->router->category->getAttribute('seo_description'));
+        Seo::setKeywords($this->router->category->getAttribute('seo_keywords'));
+        Seo::setTitle($this->router->category->getAttribute('name'));
 
         return view('catalog.category', [
-            'category' => $this->service->category,
+            'category' => $this->router->category,
         ]);
 
     }
 
     public function categoriesList()
     {
-        Seo::setDescription($this->service->category->getAttribute('seo_description'));
-        Seo::setKeywords($this->service->category->getAttribute('seo_keywords'));
-        Seo::setTitle($this->service->category->getAttribute('name'));
+        Seo::setDescription($this->router->category->getAttribute('seo_description'));
+        Seo::setKeywords($this->router->category->getAttribute('seo_keywords'));
+        Seo::setTitle($this->router->category->getAttribute('name'));
 
         return view('catalog.categories_list', [
-            'category' => $this->service->category,
+            'category' => $this->router->category,
         ]);
     }
 

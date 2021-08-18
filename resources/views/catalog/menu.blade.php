@@ -1,1 +1,1 @@
-<? echo \App\Services\CatalogService::getMenuString();?>
+<? echo \App\Services\Facades\MenuService::getCatalogMenuString();?>
